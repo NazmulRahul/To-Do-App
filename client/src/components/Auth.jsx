@@ -20,7 +20,6 @@ const Auth = () => {
         console.log(user);
     };
     return (
-        <div className="auth-container">
             <div className="auth-container-box">
                 <form >
                     <h2>{logIn ? "Please Log In" : "Please Sign Up"}</h2>
