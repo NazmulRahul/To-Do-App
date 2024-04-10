@@ -11,8 +11,8 @@ import {
 } from "./components/components";
 
 const App = () => {
-    
-    
+    const [isLoggedIn, setLoggedIn] = useState(false);
+
     const userEmail = "test@gmail.com";
     const [tasks, setTasks] = useState();
     const getData = async () => {
@@ -26,14 +26,30 @@ const App = () => {
             console.log(error);
         }
     };
-    useEffect(() => getData, []);
-    const sortedTask=tasks?.sort((a,b)=>new Date(a.date)-new Date(b.date))
-    console.log("sorted ",sortedTask);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            getData;
+        }
+    }, []);
+    const sortedTask = tasks?.sort(
+        (a, b) => Number(b.progress) - Number(a.progress)
+    );
 
     return (
         <div className="app">
-            <ListHeader listName="🏖️ Holiday Tick List" />
-            {sortedTask?.map((task)=><ListItem key={task.id} task={task} />)}
+            {!isLoggedIn && <Auth />}
+            {isLoggedIn && (
+                <div>
+                    <ListHeader
+                        listName="🏖️ Holiday Tick List"
+                        getData={getData}
+                    />
+                    {sortedTask?.map((task) => (
+                        <ListItem key={task.id} task={task} getData={getData} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

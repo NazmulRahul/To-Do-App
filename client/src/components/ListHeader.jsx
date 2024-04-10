@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import Model from "./Model";
-const ListHeader = ({listName}) => {
+const ListHeader = ({listName,getData}) => {
     const [mode,setMode]=useState("")
     const [showModel,setShowModel]=useState(false)
     const signout=()=>{
@@ -15,7 +15,7 @@ const ListHeader = ({listName}) => {
                 setShowModel(true)}}>ADD NEW</button>
                 <button className="signout" onClick={signout} >SIGN OUT</button>                
             </div>
-            {showModel && <Model mode={mode} setShowModel={setShowModel}/>}
+            {showModel && <Model mode={mode} setShowModel={setShowModel} getData={getData}/>}
         </div>
     );
 };
