@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-const Auth = () => {
+const Auth = ({ setLoggedIn }) => {
     const [logIn, setLogIn] = useState(false);
     const [error, setError] = useState(null);
     const [user, setUser] = useState({
@@ -15,13 +15,45 @@ const Auth = () => {
             [name]: value,
         }));
     };
-    const test = (e) => {
-        e.preventDefault();
-        console.log(user);
+    const handleAuth = async (event, action) => {
+        event.preventDefault();
+        if (!logIn && user.password !== user.confirmedPassword) {
+            setError("password does not match");
+            return;
+        }
+        try {
+            const response = await fetch(`http://localhost:5000/${action}`, {
+                method: "POST", // *GET, POST, PUT, DELETE, etc. // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "include",
+                headers: { "Content-type": "application/json; charset=UTF-8" },
+                body: JSON.stringify(user),
+            });
+            // const response=await Axios.post(`http://localhost:5000/${action}`,{
+            //     body:user
+            // })
+            const data = await response.json();
+            if (data.detail) {
+                setError(data.error);
+                return;
+            }
+            if (response.status === 404) {
+                setError(data.msg);
+                return;
+            }
+            if (response.status === 200 ) {
+                console.log('logged in')
+                setLoggedIn(true);
+                return;
+            }
+        } catch (error) {
+            console.log("ERROR: ");
+            console.log(error);
+        }
     };
     return (
+        <div className="auth-container">
             <div className="auth-container-box">
-                <form >
+                <form>
                     <h2>{logIn ? "Please Log In" : "Please Sign Up"}</h2>
                     <input
                         type="email"
@@ -46,7 +78,13 @@ const Auth = () => {
                             onChange={handleChange}
                         />
                     )}
-                    <input type="submit" value="Submit" onClick={test} />
+                    <input
+                        type="submit"
+                        value="Submit"
+                        onClick={() =>
+                            handleAuth(event, logIn ? "login" : "signup")
+                        }
+                    />
                     {error && <p>{error}</p>}
                 </form>
                 <div className="auth-options">
@@ -57,8 +95,8 @@ const Auth = () => {
                         }}
                         style={{
                             backgroundColor: !logIn
-                            ? "rgb(230,230,230"
-                            : "rgb(200,200,200)"
+                                ? "rgb(230,230,230"
+                                : "rgb(200,200,200)",
                         }}
                     >
                         Sign Up
@@ -68,7 +106,7 @@ const Auth = () => {
                         style={{
                             backgroundColor: logIn
                                 ? "rgb(230,230,230"
-                                : "rgb(200,200,200)"
+                                : "rgb(200,200,200)",
                         }}
                     >
                         Log In

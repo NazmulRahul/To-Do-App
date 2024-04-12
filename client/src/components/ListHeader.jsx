@@ -1,12 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Model from "./Model";
-const ListHeader = ({listName,getData}) => {
+const ListHeader = ({listName,getData,userEmail,setLoggedIn}) => {
     const [mode,setMode]=useState("")
     const [showModel,setShowModel]=useState(false)
-    const signout=()=>{
-        console.log("signout")
+    const signout=async()=>{
+        await fetch(`http://localhost:5000/logout`, {
+            method: "GET",
+            credentials: "include",
+        });
+        setLoggedIn(false)
     }
+    useEffect(() => {
+        getData();
+    }, []);
     return (
         <div className="list-header">
             <h1>{listName}</h1>
@@ -15,7 +22,7 @@ const ListHeader = ({listName,getData}) => {
                 setShowModel(true)}}>ADD NEW</button>
                 <button className="signout" onClick={signout} >SIGN OUT</button>                
             </div>
-            {showModel && <Model mode={mode} setShowModel={setShowModel} getData={getData}/>}
+            {showModel && <Model mode={mode} setShowModel={setShowModel} getData={getData} userEmail={userEmail}/>}
         </div>
     );
 };

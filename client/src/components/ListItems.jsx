@@ -12,6 +12,7 @@ const ListItem = ({ task,getData }) => {
         try {
             const response = await fetch(`http://localhost:5000/todosDelete`, {
                 method: "DELETE",
+                credentials: "include",
                 headers: { "Content-type": "application/json; charset=UTF-8" },
                 body: JSON.stringify(task),
             });

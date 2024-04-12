@@ -2,10 +2,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
-const Model = ({ mode, setShowModel, task, getData }) => {
+const Model = ({ mode, setShowModel, task, getData,userEmail }) => {
     const editMode = mode === "edit" ? true : false;
     const [Data, setData] = useState({
-        user_email: editMode ? task.user_email : "test@gmail.com",
+        user_email: editMode ? task.user_email :userEmail,
         title: editMode ? task.title : "",
         progress: editMode ? task.progress : "",
         date: editMode ? task.date : new Date(),
@@ -23,6 +23,7 @@ const Model = ({ mode, setShowModel, task, getData }) => {
         try {
             const response = await fetch(`http://localhost:5000/todos`, {
                 method: "POST",
+                credentials: "include",
                 headers: { "Content-type": "application/json; charset=UTF-8" },
                 body: JSON.stringify(Data),
             });
@@ -44,6 +45,7 @@ const Model = ({ mode, setShowModel, task, getData }) => {
         try {
             const response = await fetch(`http://localhost:5000/todosEdit`, {
                 method: "PUT",
+                credentials: "include",
                 headers: { "Content-type": "application/json; charset=UTF-8" },
                 body: JSON.stringify({ ...Data, id: task.id }),
             });

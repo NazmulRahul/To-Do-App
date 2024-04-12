@@ -10,5 +10,6 @@ CREATE TABLE todos (
 
 CREATE TABLE users (
   email VARCHAR(255) PRIMARY KEY,
-  hashed_password VARCHAR(255)
+  hashed_password VARCHAR(255),
+  refresh_token VARCHAR(255)
 );
