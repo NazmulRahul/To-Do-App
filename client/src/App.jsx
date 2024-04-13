@@ -54,7 +54,7 @@ const App = () => {
 
     return (
         <div className="app">
-            {!isLoggedIn && <Auth setLoggedIn={setLoggedIn} setTasks={setTasks}  getData={getData} />}
+            {!isLoggedIn && <Auth setLoggedIn={setLoggedIn} setTasks={setTasks}  getData={getData} setEmail={setEmail} />}
             {isLoggedIn && (
                 <div>
                     <ListHeader

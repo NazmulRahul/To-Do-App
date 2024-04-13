@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-const Auth = ({ setLoggedIn,getData }) => {
+const Auth = ({ setLoggedIn,getData,setEmail }) => {
     const [logIn, setLogIn] = useState(false);
     const [error, setError] = useState(null);
     const [user, setUser] = useState({
@@ -41,7 +41,8 @@ const Auth = ({ setLoggedIn,getData }) => {
                 return;
             }
             if (response.status === 200 ) {
-                console.log('logged in')
+        
+                setEmail(user.email)
                 getData()
                 setLoggedIn(true);
                 
