@@ -9,12 +9,11 @@ import {
     TickItems,
     Model,
 } from "./components/components";
-import { Axios } from "axios";
 
 const App = () => {
     const [isLoggedIn, setLoggedIn] = useState(false);
 
-    const [userEmail, setEmail] = useState("test@gmail.com");
+    const [userEmail, setEmail] = useState(null);
     const [tasks, setTasks] = useState();
     const getData = async () => {
         try {
@@ -55,7 +54,7 @@ const App = () => {
 
     return (
         <div className="app">
-            {!isLoggedIn && <Auth setLoggedIn={setLoggedIn} setTasks={setTasks} />}
+            {!isLoggedIn && <Auth setLoggedIn={setLoggedIn} setTasks={setTasks}  getData={getData} />}
             {isLoggedIn && (
                 <div>
                     <ListHeader
@@ -63,6 +62,8 @@ const App = () => {
                         getData={getData}
                         userEmail={userEmail}
                         setLoggedIn={setLoggedIn}
+                        setTasks={setTasks}
+                        setEmail={setEmail}
                     />
                     {sortedTask?.map((task) => (
                         <ListItem key={task.id} task={task} getData={getData} userEmail={userEmail} />

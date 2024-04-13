@@ -41,7 +41,6 @@ const Model = ({ mode, setShowModel, task, getData,userEmail }) => {
     };
     const editData = async (e) => {
         e.preventDefault();
-        console.log("////////////////////////////");
         try {
             const response = await fetch(`http://localhost:5000/todosEdit`, {
                 method: "PUT",

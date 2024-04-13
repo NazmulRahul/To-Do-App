@@ -8,7 +8,6 @@ const ListItem = ({ task,getData }) => {
     console.log(task);
     const deleteData = async (e) => {
         e.preventDefault();
-        console.log('////////////////////////////')
         try {
             const response = await fetch(`http://localhost:5000/todosDelete`, {
                 method: "DELETE",
@@ -21,7 +20,6 @@ const ListItem = ({ task,getData }) => {
                 setShowModel(false);
                 getData();
             } else {
-                console.log("jsfjaioewjfawejf");
                 setShowModel(false);
             }
         } catch (error) {
@@ -34,7 +32,7 @@ const ListItem = ({ task,getData }) => {
                 <div className="info-container">
                     <TickItems />
                     <p className="task-title">{task.title}</p>
-                    <ProgressBar />
+                    <ProgressBar progress={task.progress} />
                 </div>
                 <div className="button-container">
                     <button

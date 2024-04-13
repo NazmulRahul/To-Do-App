@@ -21,7 +21,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 //get todo list
 
-
+app.get('/hello',(req,res)=>{
+    res.send('hello')
+})
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {

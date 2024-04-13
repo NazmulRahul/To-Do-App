@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import Model from "./Model";
-const ListHeader = ({listName,getData,userEmail,setLoggedIn}) => {
+const ListHeader = ({listName,getData,userEmail,setLoggedIn,setEmail,setTasks}) => {
     const [mode,setMode]=useState("")
     const [showModel,setShowModel]=useState(false)
     const signout=async()=>{
@@ -10,6 +10,9 @@ const ListHeader = ({listName,getData,userEmail,setLoggedIn}) => {
             credentials: "include",
         });
         setLoggedIn(false)
+        setTasks(null)
+        setEmail(null)
+        
     }
     useEffect(() => {
         getData();
